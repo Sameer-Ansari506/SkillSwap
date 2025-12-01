@@ -48,15 +48,15 @@ const RegisterPage = () => {
   if (isAuthenticated) return <Navigate to="/dashboard" replace />;
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-12 px-4">
-      <div className="max-w-md w-full space-y-8 animate-fade-in">
+    <div className="min-h-screen flex items-center justify-center py-8 sm:py-12 px-4">
+      <div className="max-w-md w-full space-y-6 sm:space-y-8 animate-fade-in">
         <div className="text-center">
-          <div className="text-7xl mb-4 animate-bounce-slow">🎉</div>
-          <h2 className="text-5xl font-black gradient-text text-glow mb-3">Join SkillSwap</h2>
-          <p className="text-xl text-white font-semibold drop-shadow-lg">Start trading skills with peers worldwide 🌍</p>
+          <div className="text-5xl sm:text-6xl lg:text-7xl mb-3 sm:mb-4 animate-bounce-slow">🎉</div>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black gradient-text text-glow mb-2 sm:mb-3">Join SkillSwap</h2>
+          <p className="text-base sm:text-lg lg:text-xl text-white font-semibold drop-shadow-lg">Start trading skills with peers worldwide 🌍</p>
         </div>
-        <div className="glass rounded-3xl shadow-2xl p-8 space-y-6 border-4 border-white/40 neon-border max-h-[80vh] overflow-y-auto">
-          <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
+        <div className="glass rounded-2xl sm:rounded-3xl shadow-2xl p-6 sm:p-8 space-y-5 sm:space-y-6 border-2 sm:border-4 border-white/40 neon-border max-h-[85vh] overflow-y-auto">
+          <form className="space-y-4 sm:space-y-5" onSubmit={handleSubmit(onSubmit)}>
             <Input label="Full Name" {...register('name')} error={errors.name?.message} />
             <Input label="Email" type="email" {...register('email')} error={errors.email?.message} />
             <Input label="Password" type="password" {...register('password')} error={errors.password?.message} />
@@ -67,8 +67,8 @@ const RegisterPage = () => {
               error={errors.whatsappNumber?.message}
             />
             
-            <div className="border-t-2 border-purple-200 pt-5">
-              <h3 className="text-lg font-bold gradient-text mb-4">🎯 Your Skills</h3>
+            <div className="border-t-2 border-purple-200 pt-4 sm:pt-5">
+              <h3 className="text-base sm:text-lg font-bold gradient-text mb-3 sm:mb-4">🎯 Your Skills</h3>
               <SkillsManager
                 label="What can you teach?"
                 skills={skillsToTeach}
@@ -77,7 +77,7 @@ const RegisterPage = () => {
               />
             </div>
             
-            <div className="border-t-2 border-purple-200 pt-5">
+            <div className="border-t-2 border-purple-200 pt-4 sm:pt-5">
               <SkillsManager
                 label="What do you want to learn?"
                 skills={skillsToLearn}
@@ -86,11 +86,11 @@ const RegisterPage = () => {
               />
             </div>
             
-            <Button type="submit" className="w-full btn-gradient text-lg py-4" disabled={isSubmitting}>
+            <Button type="submit" className="w-full btn-gradient text-base sm:text-lg py-3 sm:py-4" disabled={isSubmitting}>
               {isSubmitting ? '⏳ Creating account...' : '🚀 Sign up free'}
             </Button>
           </form>
-          <p className="text-center text-sm font-semibold text-slate-700">
+          <p className="text-center text-xs sm:text-sm font-semibold text-slate-700">
             Already have an account?{' '}
             <Link to="/login" className="text-purple-600 hover:text-purple-700 font-bold underline">
               Log in

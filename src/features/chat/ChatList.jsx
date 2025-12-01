@@ -42,27 +42,27 @@ const ChatList = () => {
   };
 
   return (
-    <div className="grid md:grid-cols-3 gap-6 animate-fade-in">
-      <div className="glass rounded-2xl p-6 space-y-4 shadow-lg">
-        <h3 className="font-bold text-lg gradient-text">💬 Connected Users</h3>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 animate-fade-in">
+      <div className="glass rounded-xl sm:rounded-2xl p-4 sm:p-6 space-y-3 sm:space-y-4 shadow-lg">
+        <h3 className="font-bold text-base sm:text-lg gradient-text">💬 Connected Users</h3>
         <p className="text-xs text-slate-500">Chat with users you have bookings with</p>
-        <div className="space-y-2">
+        <div className="space-y-2 max-h-[300px] md:max-h-[500px] overflow-y-auto">
           {connectedUsers.map((user) => (
             <button
               key={user._id}
               onClick={() => handleSelect(user._id)}
-              className={`w-full text-left px-4 py-3 rounded-xl transition-all ${
+              className={`w-full text-left px-3 sm:px-4 py-2 sm:py-3 rounded-lg sm:rounded-xl transition-all ${
                 activePartner === user._id
                   ? 'bg-gradient-to-r from-brand-500 to-brand-600 text-white shadow-lg'
                   : 'hover:bg-brand-50 hover:shadow-md'
               }`}
             >
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-accent-400 to-accent-600 flex items-center justify-center text-white font-bold">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-accent-400 to-accent-600 flex items-center justify-center text-white font-bold text-sm sm:text-base flex-shrink-0">
                   {user.name?.charAt(0).toUpperCase()}
                 </div>
-                <div>
-                  <p className={`font-semibold ${activePartner === user._id ? 'text-white' : 'text-slate-900'}`}>
+                <div className="flex-1 min-w-0">
+                  <p className={`font-semibold text-sm sm:text-base truncate ${activePartner === user._id ? 'text-white' : 'text-slate-900'}`}>
                     {user.name}
                   </p>
                   <p className={`text-xs ${activePartner === user._id ? 'text-white/80' : 'text-slate-500'}`}>
@@ -73,9 +73,9 @@ const ChatList = () => {
             </button>
           ))}
           {connectedUsers.length === 0 && (
-            <div className="text-center py-8">
-              <p className="text-4xl mb-2">👥</p>
-              <p className="text-sm text-slate-500">No connections yet. Complete a booking to chat!</p>
+            <div className="text-center py-6 sm:py-8">
+              <p className="text-3xl sm:text-4xl mb-2">👥</p>
+              <p className="text-xs sm:text-sm text-slate-500">No connections yet. Complete a booking to chat!</p>
             </div>
           )}
         </div>

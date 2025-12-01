@@ -47,26 +47,26 @@ const ChatWindow = () => {
 
   if (!activePartner) {
     return (
-      <div className="glass rounded-2xl p-12 text-center shadow-lg h-full flex items-center justify-center">
+      <div className="glass rounded-xl sm:rounded-2xl p-8 sm:p-12 text-center shadow-lg h-full flex items-center justify-center">
         <div>
-          <p className="text-6xl mb-4">💬</p>
-          <p className="text-xl text-slate-600">Select a contact to start chatting</p>
+          <p className="text-5xl sm:text-6xl mb-3 sm:mb-4">💬</p>
+          <p className="text-base sm:text-lg lg:text-xl text-slate-600">Select a contact to start chatting</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="glass rounded-2xl shadow-lg flex flex-col h-[600px]">
-      <div className="p-4 border-b border-white/20">
-        <h3 className="font-bold text-lg gradient-text">Chat</h3>
+    <div className="glass rounded-xl sm:rounded-2xl shadow-lg flex flex-col h-[500px] sm:h-[600px]">
+      <div className="p-3 sm:p-4 border-b border-white/20">
+        <h3 className="font-bold text-base sm:text-lg gradient-text">Chat</h3>
       </div>
       
-      <div className="flex-1 overflow-y-auto p-4 space-y-3">
+      <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-2 sm:space-y-3">
         {messages.length === 0 && (
-          <div className="text-center py-8">
-            <p className="text-4xl mb-2">👋</p>
-            <p className="text-sm text-slate-500">Start the conversation!</p>
+          <div className="text-center py-6 sm:py-8">
+            <p className="text-3xl sm:text-4xl mb-2">👋</p>
+            <p className="text-xs sm:text-sm text-slate-500">Start the conversation!</p>
           </div>
         )}
         {messages.map((message, idx) => {
@@ -76,12 +76,12 @@ const ChatWindow = () => {
               key={message._id || idx}
               className={`flex ${isOwn ? 'justify-end' : 'justify-start'} animate-slide-up`}
             >
-              <div className={`max-w-[70%] px-4 py-3 rounded-2xl shadow-md ${
+              <div className={`max-w-[85%] sm:max-w-[70%] px-3 sm:px-4 py-2 sm:py-3 rounded-xl sm:rounded-2xl shadow-md ${
                 isOwn
                   ? 'bg-gradient-to-r from-brand-500 to-brand-600 text-white'
                   : 'bg-white text-slate-900'
               }`}>
-                <p className="text-sm">{message.text}</p>
+                <p className="text-xs sm:text-sm break-words">{message.text}</p>
                 <p className={`text-xs mt-1 ${isOwn ? 'text-white/70' : 'text-slate-400'}`}>
                   {new Date(message.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </p>
@@ -92,15 +92,15 @@ const ChatWindow = () => {
         <div ref={messagesEndRef} />
       </div>
       
-      <form className="p-4 border-t border-white/20 flex gap-3" onSubmit={handleSend}>
+      <form className="p-3 sm:p-4 border-t border-white/20 flex gap-2 sm:gap-3" onSubmit={handleSend}>
         <input
-          className="flex-1 border-2 border-brand-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+          className="flex-1 border-2 border-brand-200 rounded-lg sm:rounded-xl px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent"
           value={text}
           placeholder="Type your message..."
           onChange={(e) => setText(e.target.value)}
         />
-        <Button type="submit" className="btn-gradient px-6">
-          Send 📤
+        <Button type="submit" className="btn-gradient px-4 sm:px-6 text-sm sm:text-base">
+          📤
         </Button>
       </form>
     </div>

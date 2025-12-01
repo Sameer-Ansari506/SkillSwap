@@ -36,22 +36,22 @@ const LoginPage = () => {
   if (isAuthenticated) return <Navigate to="/dashboard" replace />;
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-12 px-4">
-      <div className="max-w-md w-full space-y-8 animate-fade-in">
+    <div className="min-h-screen flex items-center justify-center py-8 sm:py-12 px-4">
+      <div className="max-w-md w-full space-y-6 sm:space-y-8 animate-fade-in">
         <div className="text-center">
-          <div className="text-7xl mb-4 animate-bounce-slow">👋</div>
-          <h2 className="text-5xl font-black gradient-text text-glow mb-3">Welcome Back!</h2>
-          <p className="text-xl text-white font-semibold drop-shadow-lg">Continue your learning journey</p>
+          <div className="text-5xl sm:text-6xl lg:text-7xl mb-3 sm:mb-4 animate-bounce-slow">👋</div>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black gradient-text text-glow mb-2 sm:mb-3">Welcome Back!</h2>
+          <p className="text-base sm:text-lg lg:text-xl text-white font-semibold drop-shadow-lg">Continue your learning journey</p>
         </div>
-        <div className="glass rounded-3xl shadow-2xl p-8 space-y-6 border-4 border-white/40 neon-border">
-          <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
+        <div className="glass rounded-2xl sm:rounded-3xl shadow-2xl p-6 sm:p-8 space-y-5 sm:space-y-6 border-2 sm:border-4 border-white/40 neon-border">
+          <form className="space-y-4 sm:space-y-5" onSubmit={handleSubmit(onSubmit)}>
             <Input label="Email" type="email" {...register('email')} error={errors.email?.message} />
             <Input label="Password" type="password" {...register('password')} error={errors.password?.message} />
-            <Button type="submit" className="w-full btn-gradient text-lg py-4" disabled={isSubmitting}>
+            <Button type="submit" className="w-full btn-gradient text-base sm:text-lg py-3 sm:py-4" disabled={isSubmitting}>
               {isSubmitting ? '⏳ Logging in...' : '🚀 Continue'}
             </Button>
           </form>
-          <p className="text-center text-sm font-semibold text-slate-700">
+          <p className="text-center text-xs sm:text-sm font-semibold text-slate-700">
             Don&apos;t have an account?{' '}
             <Link to="/register" className="text-purple-600 hover:text-purple-700 font-bold underline">
               Sign up now

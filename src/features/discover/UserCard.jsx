@@ -43,18 +43,18 @@ const UserCard = ({ user }) => {
   const avatarColor = avatarColors[Math.abs(user.name?.charCodeAt(0) || 0) % avatarColors.length];
 
   return (
-    <div className="glass rounded-3xl p-6 space-y-5 shadow-xl card-hover border-2 border-white/40 relative overflow-hidden">
+    <div className="glass rounded-2xl sm:rounded-3xl p-4 sm:p-6 space-y-4 sm:space-y-5 shadow-xl card-hover border-2 border-white/40 relative overflow-hidden">
       {/* Decorative gradient blob */}
-      <div className="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-purple-300/30 to-pink-300/30 rounded-full blur-2xl"></div>
+      <div className="absolute -top-10 -right-10 w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-br from-purple-300/30 to-pink-300/30 rounded-full blur-2xl"></div>
       
-      <div className="flex items-start justify-between relative z-10">
-        <div className="flex items-center gap-4">
-          <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${avatarColor} flex items-center justify-center text-white text-2xl font-bold shadow-lg transform hover:rotate-6 transition-transform`}>
+      <div className="flex flex-col sm:flex-row items-start justify-between relative z-10 gap-3 sm:gap-0">
+        <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
+          <div className={`w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br ${avatarColor} flex items-center justify-center text-white text-xl sm:text-2xl font-bold shadow-lg transform hover:rotate-6 transition-transform flex-shrink-0`}>
             {user.name?.charAt(0).toUpperCase()}
           </div>
-          <div>
-            <p className="text-xl font-bold text-slate-900">{user.name}</p>
-            <p className="text-sm text-slate-600 flex items-center gap-1 font-medium">
+          <div className="flex-1 min-w-0">
+            <p className="text-lg sm:text-xl font-bold text-slate-900 truncate">{user.name}</p>
+            <p className="text-xs sm:text-sm text-slate-600 flex items-center gap-1 font-medium">
               📍 {user.location || 'Remote'}
             </p>
             {user.matchScore > 0 && (
@@ -64,7 +64,9 @@ const UserCard = ({ user }) => {
             )}
           </div>
         </div>
-        <Rating value={user.rating || 0} />
+        <div className="self-end sm:self-auto">
+          <Rating value={user.rating || 0} />
+        </div>
       </div>
       
       <div className="flex gap-2 flex-wrap">
@@ -72,14 +74,14 @@ const UserCard = ({ user }) => {
           <SkillTag key={skill.name} label={skill.name} />
         ))}
         {user.skillsToTeach?.length > 4 && (
-          <span className="px-3 py-1.5 bg-slate-100 text-slate-600 rounded-full text-xs font-bold">
+          <span className="px-2 sm:px-3 py-1 sm:py-1.5 bg-slate-100 text-slate-600 rounded-full text-xs font-bold">
             +{user.skillsToTeach.length - 4} more
           </span>
         )}
       </div>
       
-      <div className="flex gap-3 pt-2">
-        <Button className="flex-1 btn-gradient text-white font-bold" onClick={handleRequest}>
+      <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-2">
+        <Button className="flex-1 btn-gradient text-white font-bold text-sm sm:text-base" onClick={handleRequest}>
           🤝 Request Swap
         </Button>
         {user.whatsappNumber && (
@@ -89,7 +91,7 @@ const UserCard = ({ user }) => {
             rel="noreferrer"
             className="flex-1"
           >
-            <Button variant="success" className="w-full font-bold">
+            <Button variant="success" className="w-full font-bold text-sm sm:text-base">
               💬 WhatsApp
             </Button>
           </a>
