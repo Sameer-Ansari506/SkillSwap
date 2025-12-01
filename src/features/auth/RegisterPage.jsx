@@ -1,0 +1,105 @@
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, Navigate, Link } from 'react-router-dom';
+import { registerUser } from './authSlice.js';
+import Button from '../../components/ui/Button.jsx';
+import Input from '../../components/ui/Input.jsx';
+import SkillsManager from '../../components/forms/SkillsManager.jsx';
+import toast from 'react-hot-toast';
+
+const schema = yup.object({
+  name: yup.string().required(),
+  email: yup.string().email().required(),
+  password: yup.string().min(6).required(),
+  whatsappNumber: yup.string().matches(/^[0-9]+$/, 'Numbers only').optional()
+});
+
+const RegisterPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isAuthenticated } = useSelector((state) => ({ isAuthenticated: Boolean(state.auth.token) }));
+  const [skillsToTeach, setSkillsToTeach] = useState([]);
+  const [skillsToLearn, setSkillsToLearn] = useState([]);
+  
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting }
+  } = useForm({ resolver: yupResolver(schema) });
+
+  const onSubmit = async (values) => {
+    try {
+      const payload = {
+        ...values,
+        skillsToTeach,
+        skillsToLearn
+      };
+      await dispatch(registerUser(payload)).unwrap();
+      toast.success('Welcome to SkillSwap! 🎉');
+      navigate('/dashboard');
+    } catch (error) {
+      toast.error(error?.message || 'Registration failed');
+    }
+  };
+
+  if (isAuthenticated) return <Navigate to="/dashboard" replace />;
+
+  return (
+    <div className="min-h-screen flex items-center justify-center py-12 px-4">
+      <div className="max-w-md w-full space-y-8 animate-fade-in">
+        <div className="text-center">
+          <div className="text-7xl mb-4 animate-bounce-slow">🎉</div>
+          <h2 className="text-5xl font-black gradient-text text-glow mb-3">Join SkillSwap</h2>
+          <p className="text-xl text-white font-semibold drop-shadow-lg">Start trading skills with peers worldwide 🌍</p>
+        </div>
+        <div className="glass rounded-3xl shadow-2xl p-8 space-y-6 border-4 border-white/40 neon-border max-h-[80vh] overflow-y-auto">
+          <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
+            <Input label="Full Name" {...register('name')} error={errors.name?.message} />
+            <Input label="Email" type="email" {...register('email')} error={errors.email?.message} />
+            <Input label="Password" type="password" {...register('password')} error={errors.password?.message} />
+            <Input
+              label="WhatsApp number (optional)"
+              placeholder="15551234567"
+              {...register('whatsappNumber')}
+              error={errors.whatsappNumber?.message}
+            />
+            
+            <div className="border-t-2 border-purple-200 pt-5">
+              <h3 className="text-lg font-bold gradient-text mb-4">🎯 Your Skills</h3>
+              <SkillsManager
+                label="What can you teach?"
+                skills={skillsToTeach}
+                onChange={setSkillsToTeach}
+                placeholder="e.g., JavaScript, Guitar, Spanish"
+              />
+            </div>
+            
+            <div className="border-t-2 border-purple-200 pt-5">
+              <SkillsManager
+                label="What do you want to learn?"
+                skills={skillsToLearn}
+                onChange={setSkillsToLearn}
+                placeholder="e.g., Python, Piano, French"
+              />
+            </div>
+            
+            <Button type="submit" className="w-full btn-gradient text-lg py-4" disabled={isSubmitting}>
+              {isSubmitting ? '⏳ Creating account...' : '🚀 Sign up free'}
+            </Button>
+          </form>
+          <p className="text-center text-sm font-semibold text-slate-700">
+            Already have an account?{' '}
+            <Link to="/login" className="text-purple-600 hover:text-purple-700 font-bold underline">
+              Log in
+            </Link>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default RegisterPage;
