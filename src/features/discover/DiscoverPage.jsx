@@ -15,6 +15,8 @@ const DiscoverPage = () => {
   const debounced = useDebouncedSearch(search, 300);
   const [skillFilter, setSkillFilter] = useState('');
   const [selectedUser, setSelectedUser] = useState(null);
+  const { user } = useSelector((state) => state.auth);
+  const userId = user?._id;
 
   const handleRequestSwap = (user) => {
     console.log('DiscoverPage: handleRequestSwap called with user:', user);
@@ -57,7 +59,9 @@ const DiscoverPage = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         {list.map((user) => (
+          user._id != userId && (
           <UserCard key={user._id} user={user} onRequestSwap={() => handleRequestSwap(user)} />
+          )
         ))}
       </div>
 
