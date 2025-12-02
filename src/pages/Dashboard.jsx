@@ -8,6 +8,7 @@ import { fetchUsers } from '../features/users/usersSlice.js';
 import { Icons, Icon } from '../utils/icons.jsx';
 import SkillTag from '../components/forms/SkillTag.jsx';
 import UserCard from '../features/discover/UserCard.jsx';
+import RequestSwapModal from '../features/discover/RequestSwapModal.jsx';
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const Dashboard = () => {
   const { items: bookings } = useSelector((state) => state.bookings);
   const { list: allUsers } = useSelector((state) => state.users);
   const [showSkillsSection, setShowSkillsSection] = useState(true);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
     dispatch(fetchRequests());
@@ -216,11 +218,20 @@ const Dashboard = () => {
           <p className="text-sm text-slate-600">Based on your skills and interests</p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {suggestedUsers.map((user) => (
-              <UserCard key={user._id} user={user} />
+            {suggestedUsers.map((suggestedUser) => (
+              <UserCard key={suggestedUser._id} user={suggestedUser} onRequestSwap={() => setSelectedUser(suggestedUser)} />
             ))}
           </div>
         </div>
+      )}
+
+      {/* Request Swap Modal */}
+      {selectedUser && (
+        <RequestSwapModal 
+          user={selectedUser} 
+          isOpen={!!selectedUser}
+          onClose={() => setSelectedUser(null)} 
+        />
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
