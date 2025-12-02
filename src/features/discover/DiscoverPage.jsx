@@ -4,6 +4,7 @@ import { fetchUsers } from '../users/usersSlice.js';
 import { setSearch, setLocation } from './discoverSlice.js';
 import useDebouncedSearch from '../../hooks/useDebouncedSearch.js';
 import UserCard from './UserCard.jsx';
+import RequestSwapModal from './RequestSwapModal.jsx';
 import Input from '../../components/ui/Input.jsx';
 import { Icons, Icon } from '../../utils/icons.jsx';
 
@@ -13,6 +14,7 @@ const DiscoverPage = () => {
   const { list } = useSelector((state) => state.users);
   const debounced = useDebouncedSearch(search, 300);
   const [skillFilter, setSkillFilter] = useState('');
+  const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
     dispatch(fetchUsers({ q: debounced, location, skill: skillFilter }));
@@ -50,9 +52,18 @@ const DiscoverPage = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         {list.map((user) => (
-          <UserCard key={user._id} user={user} />
+          <UserCard key={user._id} user={user} onRequestSwap={() => setSelectedUser(user)} />
         ))}
       </div>
+
+      {/* Modal at page level */}
+      {selectedUser && (
+        <RequestSwapModal 
+          user={selectedUser} 
+          isOpen={!!selectedUser}
+          onClose={() => setSelectedUser(null)} 
+        />
+      )}
       
       {list.length === 0 && (
         <div className="text-center py-8 sm:py-12">
