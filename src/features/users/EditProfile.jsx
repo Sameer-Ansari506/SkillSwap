@@ -26,8 +26,12 @@ const EditProfile = () => {
 
   const onSubmit = async (values) => {
     try {
+      // Only send fields that can be updated
       const payload = {
-        ...values,
+        name: values.name,
+        bio: values.bio,
+        location: values.location,
+        whatsappNumber: values.whatsappNumber,
         skillsToTeach,
         skillsToLearn
       };
@@ -40,13 +44,15 @@ const EditProfile = () => {
       navigate('/dashboard');
     } catch (error) {
       console.error('EditProfile: Update failed:', error);
+      console.error('EditProfile: Full error object:', JSON.stringify(error, null, 2));
       
       // Show detailed error message
       let errorMessage = 'Failed to update profile';
       
       if (error.details && Array.isArray(error.details)) {
         // Joi validation errors
-        errorMessage = error.details.map(d => d.message).join(', ');
+        console.error('EditProfile: Validation details:', error.details);
+        errorMessage = error.details.map(d => `${d.path?.join('.')} - ${d.message}`).join('\n');
       } else if (error.message) {
         errorMessage = error.message;
       }
