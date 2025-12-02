@@ -70,8 +70,12 @@ const SkillsManager = (
               <option value="advanced">Advanced</option>
             </select>
             
-            <Button type="button" onClick={handleAdd} className="btn-gradient px-4 sm:px-6 text-sm sm:text-base whitespace-nowrap">
-              ➕ Add
+            <Button 
+              type="button" 
+              onClick={handleAdd} 
+              className="btn-gradient px-4 sm:px-6 text-sm sm:text-base whitespace-nowrap"
+            >
+              Add
             </Button>
           </div>
         </div>
