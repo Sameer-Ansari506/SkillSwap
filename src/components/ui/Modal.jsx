@@ -29,8 +29,8 @@ const Modal = ({ title, children, isOpen, onClose, footer }) => {
   if (!isOpen) return null;
 
   console.log('Modal: Rendering with Portal to document.body');
-  console.log('Modal: title =', title);
-  console.log('Modal: children =', children);
+  console.log('Modal: Title:', title);
+  console.log('Modal: Has children:', !!children);
 
   // Render modal at document root using Portal
   return createPortal(
@@ -52,13 +52,13 @@ const Modal = ({ title, children, isOpen, onClose, footer }) => {
         style={{ backgroundColor: 'white' }}
       >
         {/* Header */}
-        <div className="sticky top-0 bg-purple-100 border-b-2 border-purple-200 px-4 sm:px-6 py-4 flex items-center justify-between">
-          <h3 className="text-lg sm:text-xl font-bold text-purple-900">
-            {title || 'Modal'}
+        <div className="bg-gradient-to-r from-purple-500 to-pink-500 px-4 sm:px-6 py-4 flex items-center justify-between rounded-t-2xl">
+          <h3 className="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+            ✨ {title}
           </h3>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-purple-200 rounded-full transition-all text-2xl font-bold"
+            className="p-2 hover:bg-white/20 rounded-full transition-all text-white text-2xl font-bold"
             aria-label="Close modal"
           >
             ×
@@ -67,12 +67,12 @@ const Modal = ({ title, children, isOpen, onClose, footer }) => {
 
         {/* Content */}
         <div className="px-4 sm:px-6 py-4 sm:py-6 bg-white">
-          {children || <p>No content</p>}
+          {children}
         </div>
 
         {/* Footer */}
         {footer && (
-          <div className="sticky bottom-0 bg-purple-100 border-t-2 border-purple-200 px-4 sm:px-6 py-4 flex justify-end gap-2">
+          <div className="bg-gray-50 px-4 sm:px-6 py-4 flex justify-end gap-2 rounded-b-2xl">
             {footer}
           </div>
         )}
