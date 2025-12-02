@@ -32,7 +32,8 @@ import {
   LightBulbIcon,
   TrophyIcon,
   RocketLaunchIcon,
-  GlobeAltIcon
+  GlobeAltIcon,
+  LinkIcon
 } from '@heroicons/react/24/outline';
 
 // Solid versions for filled icons
@@ -74,12 +75,16 @@ export const Icons = {
   
   // Features
   chat: ChatBubbleLeftRightIcon,
+  chatBubbleLeftRight: ChatBubbleLeftRightIcon,
   calendar: CalendarDaysIcon,
+  calendarDays: CalendarDaysIcon,
   star: StarIcon,
   starSolid: StarSolid,
   users: UserGroupIcon,
   location: MapPinIcon,
+  mapPin: MapPinIcon,
   handshake: HandRaisedIcon,
+  handRaised: HandRaisedIcon,
   sparkles: SparklesIcon,
   sparklesSolid: SparklesSolid,
   bolt: BoltIcon,
@@ -95,6 +100,10 @@ export const Icons = {
   trophy: TrophyIcon,
   rocket: RocketLaunchIcon,
   globe: GlobeAltIcon,
+  academicCap: AcademicCapIcon,
+  paperAirplane: PaperAirplaneIcon,
+  xMark: XMarkIcon,
+  link: LinkIcon,
   
   // Status & Feedback
   success: CheckCircleSolid,
