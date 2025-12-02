@@ -1,18 +1,67 @@
-import Button from './Button.jsx';
+import { useEffect } from 'react';
+import { Icons, Icon } from '../../utils/icons.jsx';
 
 const Modal = ({ title, children, isOpen, onClose, footer }) => {
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
+  // Close on Escape key
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
+
   return (
-    <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center">
-      <div className="bg-white rounded-xl shadow-xl w-full max-w-lg p-6 space-y-4">
-        <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold">{title}</h3>
-          <Button variant="secondary" onClick={onClose}>
-            Close
-          </Button>
+    <div 
+      className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in"
+      onClick={onClose}
+    >
+      <div 
+        className="glass rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto border-2 border-white/40 animate-slide-up"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="sticky top-0 bg-white/95 backdrop-blur-sm border-b-2 border-purple-200 px-4 sm:px-6 py-4 flex items-center justify-between z-10">
+          <h3 className="text-lg sm:text-xl font-bold gradient-text flex items-center gap-2">
+            <Icon icon={Icons.sparklesSolid} size="md" className="text-purple-500" />
+            {title}
+          </h3>
+          <button
+            onClick={onClose}
+            className="p-2 hover:bg-purple-100 rounded-full transition-all hover:scale-110 active:scale-95"
+            aria-label="Close modal"
+          >
+            <Icon icon={Icons.xMark} size="lg" className="text-slate-600" />
+          </button>
         </div>
-        <div>{children}</div>
-        {footer && <div className="flex justify-end gap-2">{footer}</div>}
+
+        {/* Content */}
+        <div className="px-4 sm:px-6 py-4 sm:py-6">
+          {children}
+        </div>
+
+        {/* Footer */}
+        {footer && (
+          <div className="sticky bottom-0 bg-white/95 backdrop-blur-sm border-t-2 border-purple-200 px-4 sm:px-6 py-4 flex justify-end gap-2">
+            {footer}
+          </div>
+        )}
       </div>
     </div>
   );

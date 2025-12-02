@@ -153,34 +153,66 @@ const UserCard = ({ user }) => {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       >
-        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
-          <Input
-            label="What can you offer?"
-            placeholder="e.g., JavaScript, Guitar"
-            {...register('offeredSkill', { required: 'This field is required' })}
-            error={errors.offeredSkill?.message}
-          />
+        <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
+          {/* User Info Banner */}
+          <div className="bg-gradient-to-r from-purple-100 to-pink-100 rounded-xl p-4 flex items-center gap-3">
+            <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${avatarColor} flex items-center justify-center text-white text-xl font-bold shadow-lg flex-shrink-0`}>
+              {user.name?.charAt(0).toUpperCase()}
+            </div>
+            <div>
+              <p className="font-bold text-slate-900">{user.name}</p>
+              <p className="text-sm text-slate-600 flex items-center gap-1">
+                <Icon icon={Icons.mapPin} size="sm" />
+                {user.location || 'Remote'}
+              </p>
+            </div>
+          </div>
+
+          {/* Skills Section */}
+          <div className="space-y-4">
+            <div className="flex items-start gap-2">
+              <Icon icon={Icons.handRaised} size="md" className="text-purple-500 mt-1 flex-shrink-0" />
+              <div className="flex-1">
+                <Input
+                  label="What can you offer?"
+                  placeholder="e.g., JavaScript, Guitar"
+                  {...register('offeredSkill', { required: 'This field is required' })}
+                  error={errors.offeredSkill?.message}
+                />
+              </div>
+            </div>
+            
+            <div className="flex items-start gap-2">
+              <Icon icon={Icons.academicCap} size="md" className="text-blue-500 mt-1 flex-shrink-0" />
+              <div className="flex-1">
+                <Input
+                  label="What do you want to learn?"
+                  placeholder="e.g., Python, Piano"
+                  {...register('requestedSkill', { required: 'This field is required' })}
+                  error={errors.requestedSkill?.message}
+                />
+              </div>
+            </div>
+          </div>
           
-          <Input
-            label="What do you want to learn?"
-            placeholder="e.g., Python, Piano"
-            {...register('requestedSkill', { required: 'This field is required' })}
-            error={errors.requestedSkill?.message}
-          />
-          
+          {/* Message */}
           <label className="flex flex-col gap-2 text-sm">
-            <span className="font-bold text-slate-800">Message (optional)</span>
+            <span className="font-bold text-slate-800 flex items-center gap-2">
+              <Icon icon={Icons.chatBubbleLeftRight} size="sm" className="text-emerald-500" />
+              Message (optional)
+            </span>
             <textarea
               {...register('description')}
-              className="border-2 border-purple-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400 bg-white shadow-sm"
+              className="border-3 border-purple-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-4 focus:ring-purple-400 focus:border-purple-500 bg-white shadow-md hover:shadow-lg transition-all font-medium"
               rows={3}
               placeholder="Tell them why you'd like to connect..."
             />
           </label>
 
-          <div className="border-t pt-4 space-y-3">
-            <h4 className="font-semibold text-sm text-slate-700 flex items-center gap-2">
-              <Icon icon={Icons.calendar} size="sm" />
+          {/* Schedule Section */}
+          <div className="border-t-2 border-purple-200 pt-4 space-y-3">
+            <h4 className="font-bold text-slate-800 flex items-center gap-2">
+              <Icon icon={Icons.calendarDays} size="md" className="text-orange-500" />
               Suggest Session Times (optional)
             </h4>
             
@@ -197,22 +229,29 @@ const UserCard = ({ user }) => {
             />
           </div>
 
-          <Input
-            label="Meeting Link (optional)"
-            placeholder="e.g., Zoom, Google Meet, or location"
-            {...register('meetingLink')}
-          />
+          {/* Meeting Link */}
+          <div className="flex items-start gap-2">
+            <Icon icon={Icons.link} size="md" className="text-cyan-500 mt-7 flex-shrink-0" />
+            <div className="flex-1">
+              <Input
+                label="Meeting Link (optional)"
+                placeholder="e.g., Zoom, Google Meet, or location"
+                {...register('meetingLink')}
+              />
+            </div>
+          </div>
 
-          <div className="flex gap-3 pt-2">
-            <Button type="submit" className="flex-1 btn-gradient flex items-center gap-2 justify-center">
-              <Icon icon={Icons.send} size="md" />
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row gap-3 pt-2">
+            <Button type="submit" className="flex-1 btn-gradient flex items-center gap-2 justify-center text-base py-3">
+              <Icon icon={Icons.paperAirplane} size="md" />
               Send Request
             </Button>
             <Button
               type="button"
               variant="secondary"
               onClick={() => setIsModalOpen(false)}
-              className="flex-1"
+              className="flex-1 py-3"
             >
               Cancel
             </Button>
