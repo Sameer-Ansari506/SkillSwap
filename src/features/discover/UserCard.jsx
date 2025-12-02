@@ -88,7 +88,7 @@ const UserCard = ({ user }) => {
   const avatarColor = avatarColors[Math.abs(user.name?.charCodeAt(0) || 0) % avatarColors.length];
 
   return (
-    <div className="glass rounded-2xl sm:rounded-3xl p-4 sm:p-6 space-y-4 sm:space-y-5 shadow-xl card-hover border-2 border-white/40 relative overflow-hidden">
+    <div className="glass rounded-2xl sm:rounded-3xl p-4 sm:p-6 space-y-4 sm:space-y-5 shadow-xl card-hover border-2 border-white/40 relative">
       {/* Decorative gradient blob */}
       <div className="absolute -top-10 -right-10 w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-br from-purple-300/30 to-pink-300/30 rounded-full blur-2xl"></div>
       

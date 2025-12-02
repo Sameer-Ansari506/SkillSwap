@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Icons, Icon } from '../../utils/icons.jsx';
 
 const Modal = ({ title, children, isOpen, onClose, footer }) => {
@@ -27,10 +28,12 @@ const Modal = ({ title, children, isOpen, onClose, footer }) => {
 
   if (!isOpen) return null;
 
-  return (
+  // Render modal at document root using Portal
+  return createPortal(
     <div 
-      className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in"
+      className="fixed inset-0 z-[9999] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in"
       onClick={onClose}
+      style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
     >
       <div 
         className="glass rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto border-2 border-white/40 animate-slide-up"
@@ -63,7 +66,8 @@ const Modal = ({ title, children, isOpen, onClose, footer }) => {
           </div>
         )}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 
