@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -31,6 +31,15 @@ const RegisterPage = () => {
     formState: { errors, isSubmitting }
   } = useForm({ resolver: yupResolver(schema) });
 
+  // Debug: Log when skills change
+  useEffect(() => {
+    console.log('RegisterPage: skillsToTeach updated:', skillsToTeach);
+  }, [skillsToTeach]);
+
+  useEffect(() => {
+    console.log('RegisterPage: skillsToLearn updated:', skillsToLearn);
+  }, [skillsToLearn]);
+
   const onSubmit = async (values) => {
     try {
       const payload = {
@@ -38,10 +47,16 @@ const RegisterPage = () => {
         skillsToTeach,
         skillsToLearn
       };
+      console.log('RegisterPage: Submitting with skills:', {
+        skillsToTeach,
+        skillsToLearn,
+        fullPayload: payload
+      });
       await dispatch(registerUser(payload)).unwrap();
       toast.success('Welcome to SkillSwap! 🎉');
       navigate('/dashboard');
     } catch (error) {
+      console.error('RegisterPage: Registration error:', error);
       toast.error(error?.message || 'Registration failed');
     }
   };

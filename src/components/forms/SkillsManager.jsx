@@ -2,12 +2,20 @@ import { useState } from 'react';
 import Button from '../ui/Button.jsx';
 import SkillTag from './SkillTag.jsx';
 
-const SkillsManager = ({ label, skills = [], onChange, placeholder = 'e.g., JavaScript, Guitar, Spanish' }) => {
+const SkillsManager = (
+  { label, 
+    skills = [],
+    onChange,
+    placeholder = 'e.g., JavaScript, Guitar, Spanish' 
+  }) => {
   const [inputValue, setInputValue] = useState('');
   const [level, setLevel] = useState('beginner');
 
   const handleAdd = () => {
-    if (!inputValue.trim()) return;
+    if (!inputValue.trim()) {
+      console.log('SkillsManager: Input is empty, not adding');
+      return;
+    }
     
     const newSkill = {
       name: inputValue.trim(),
@@ -15,7 +23,12 @@ const SkillsManager = ({ label, skills = [], onChange, placeholder = 'e.g., Java
       tags: []
     };
     
-    onChange([...skills, newSkill]);
+    const updatedSkills = [...skills, newSkill];
+    console.log('SkillsManager: Adding skill:', newSkill);
+    console.log('SkillsManager: Current skills:', skills);
+    console.log('SkillsManager: Updated skills:', updatedSkills);
+    
+    onChange(updatedSkills);
     setInputValue('');
     setLevel('beginner');
   };
