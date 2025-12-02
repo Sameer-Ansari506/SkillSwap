@@ -52,6 +52,7 @@ const RegisterPage = () => {
         skillsToLearn,
         fullPayload: payload
       });
+      console.log('authApi: Register payload:', payload);
       await dispatch(registerUser(payload)).unwrap();
       toast.success('Welcome to SkillSwap! 🎉');
       navigate('/dashboard');
