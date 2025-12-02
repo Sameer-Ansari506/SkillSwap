@@ -3,7 +3,6 @@ import client from './axiosClient.js';
 const authApi = {
   login: (payload) => client.post('/api/auth/login', payload),
   register: (payload) => client.post('/api/auth/register', payload),
-  console.log('authApi: Register payload:', payload);
   me: () => client.get('/api/auth/me')
 };
 
