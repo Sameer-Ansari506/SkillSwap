@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import Button from '../components/ui/Button.jsx';
-import { Icons, Icon } from '../utils/icons.js';
+import { Icons, Icon } from '../utils/icons.jsx';
 
 const steps = [
   { icon: Icons.profile, title: 'Create Profile', desc: 'List skills you teach and want to learn' },

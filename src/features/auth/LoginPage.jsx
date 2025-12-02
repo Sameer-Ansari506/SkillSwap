@@ -7,7 +7,7 @@ import { loginUser } from './authSlice.js';
 import Button from '../../components/ui/Button.jsx';
 import Input from '../../components/ui/Input.jsx';
 import toast from 'react-hot-toast';
-import { Icons, Icon } from '../../utils/icons.js';
+import { Icons, Icon } from '../../utils/icons.jsx';
 
 const schema = yup.object({
   email: yup.string().email().required(),

@@ -3,7 +3,7 @@ import { useEffect, useMemo } from 'react';
 import { fetchBookings } from '../bookings/bookingsSlice.js';
 import { fetchMessages, setActivePartner } from './chatSlice.js';
 import ChatWindow from './ChatWindow.jsx';
-import { Icons, Icon } from '../../utils/icons.js';
+import { Icons, Icon } from '../../utils/icons.jsx';
 
 const ChatList = () => {
   const dispatch = useDispatch();

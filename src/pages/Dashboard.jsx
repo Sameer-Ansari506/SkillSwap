@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Button from '../components/ui/Button.jsx';
 import { fetchRequests } from '../features/requests/requestsSlice.js';
 import { fetchBookings } from '../features/bookings/bookingsSlice.js';
-import { Icons, Icon } from '../utils/icons.js';
+import { Icons, Icon } from '../utils/icons.jsx';
 
 const Dashboard = () => {
   const dispatch = useDispatch();

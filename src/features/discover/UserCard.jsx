@@ -5,7 +5,7 @@ import Rating from '../../components/ui/Rating.jsx';
 import SkillTag from '../../components/forms/SkillTag.jsx';
 import { createRequestAsync } from '../requests/requestsSlice.js';
 import useAuth from '../../hooks/useAuth.js';
-import { Icons, Icon } from '../../utils/icons.js';
+import { Icons, Icon } from '../../utils/icons.jsx';
 
 const UserCard = ({ user }) => {
   const dispatch = useDispatch();

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Button from '../ui/Button.jsx';
 import useAuth from '../../hooks/useAuth.js';
 import { logout } from '../../features/auth/authSlice.js';
-import { Icons, Icon } from '../../utils/icons.js';
+import { Icons, Icon } from '../../utils/icons.jsx';
 
 const Header = () => {
   const dispatch = useDispatch();

@@ -5,7 +5,7 @@ import { setSearch, setLocation } from './discoverSlice.js';
 import useDebouncedSearch from '../../hooks/useDebouncedSearch.js';
 import UserCard from './UserCard.jsx';
 import Input from '../../components/ui/Input.jsx';
-import { Icons, Icon } from '../../utils/icons.js';
+import { Icons, Icon } from '../../utils/icons.jsx';
 
 const DiscoverPage = () => {
   const dispatch = useDispatch();

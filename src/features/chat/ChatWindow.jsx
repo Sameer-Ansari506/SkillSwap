@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../components/ui/Button.jsx';
 import useSocket from '../../hooks/useSocket.js';
 import { receiveSocketMessage, sendMessageAsync } from './chatSlice.js';
-import { Icons, Icon } from '../../utils/icons.js';
+import { Icons, Icon } from '../../utils/icons.jsx';
 
 const ChatWindow = () => {
   const dispatch = useDispatch();

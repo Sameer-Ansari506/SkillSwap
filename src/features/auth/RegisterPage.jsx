@@ -9,7 +9,7 @@ import Button from '../../components/ui/Button.jsx';
 import Input from '../../components/ui/Input.jsx';
 import SkillsManager from '../../components/forms/SkillsManager.jsx';
 import toast from 'react-hot-toast';
-import { Icons, Icon } from '../../utils/icons.js';
+import { Icons, Icon } from '../../utils/icons.jsx';
 
 const schema = yup.object({
   name: yup.string().required(),
