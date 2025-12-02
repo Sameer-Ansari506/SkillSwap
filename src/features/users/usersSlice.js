@@ -11,9 +11,14 @@ export const fetchProfile = createAsyncThunk('users/profile', async (id) => {
   return data;
 });
 
-export const updateProfileAsync = createAsyncThunk('users/update', async (payload) => {
-  const { data } = await usersApi.updateProfile(payload);
-  return data;
+export const updateProfileAsync = createAsyncThunk('users/update', async (payload, { rejectWithValue }) => {
+  try {
+    const { data } = await usersApi.updateProfile(payload);
+    return data;
+  } catch (error) {
+    console.error('usersSlice: Update profile error:', error.response?.data || error);
+    return rejectWithValue(error.response?.data || { message: error.message });
+  }
 });
 
 const usersSlice = createSlice({

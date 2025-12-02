@@ -31,11 +31,28 @@ const EditProfile = () => {
         skillsToTeach,
         skillsToLearn
       };
+      console.log('EditProfile: Submitting payload:', payload);
+      console.log('EditProfile: Skills to teach:', skillsToTeach);
+      console.log('EditProfile: Skills to learn:', skillsToLearn);
+      
       await dispatch(updateProfileAsync(payload)).unwrap();
       toast.success('Profile updated! 🎉');
       navigate('/dashboard');
     } catch (error) {
-      toast.error('Failed to update profile');
+      console.error('EditProfile: Update failed:', error);
+      
+      // Show detailed error message
+      let errorMessage = 'Failed to update profile';
+      
+      if (error.details && Array.isArray(error.details)) {
+        // Joi validation errors
+        errorMessage = error.details.map(d => d.message).join(', ');
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
+      console.error('EditProfile: Error message:', errorMessage);
+      toast.error(errorMessage);
     }
   };
 
