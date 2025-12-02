@@ -5,6 +5,7 @@ import Rating from '../../components/ui/Rating.jsx';
 import SkillTag from '../../components/forms/SkillTag.jsx';
 import { createRequestAsync } from '../requests/requestsSlice.js';
 import useAuth from '../../hooks/useAuth.js';
+import { Icons, Icon } from '../../utils/icons.js';
 
 const UserCard = ({ user }) => {
   const dispatch = useDispatch();
@@ -55,11 +56,13 @@ const UserCard = ({ user }) => {
           <div className="flex-1 min-w-0">
             <p className="text-lg sm:text-xl font-bold text-slate-900 truncate">{user.name}</p>
             <p className="text-xs sm:text-sm text-slate-600 flex items-center gap-1 font-medium">
-              📍 {user.location || 'Remote'}
+              <Icon icon={Icons.location} size="sm" />
+              {user.location || 'Remote'}
             </p>
             {user.matchScore > 0 && (
-              <p className="text-xs text-purple-600 font-semibold mt-1">
-                ✨ {user.matchScore}% Match
+              <p className="text-xs text-purple-600 font-semibold mt-1 flex items-center gap-1">
+                <Icon icon={Icons.sparklesSolid} size="sm" />
+                {user.matchScore}% Match
               </p>
             )}
           </div>
@@ -81,8 +84,9 @@ const UserCard = ({ user }) => {
       </div>
       
       <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-2">
-        <Button className="flex-1 btn-gradient text-white font-bold text-sm sm:text-base" onClick={handleRequest}>
-          🤝 Request Swap
+        <Button className="flex-1 btn-gradient text-white font-bold text-sm sm:text-base flex items-center gap-2 justify-center" onClick={handleRequest}>
+          <Icon icon={Icons.handshake} size="md" />
+          Request Swap
         </Button>
         {user.whatsappNumber && (
           <a
@@ -91,8 +95,9 @@ const UserCard = ({ user }) => {
             rel="noreferrer"
             className="flex-1"
           >
-            <Button variant="success" className="w-full font-bold text-sm sm:text-base">
-              💬 WhatsApp
+            <Button variant="success" className="w-full font-bold text-sm sm:text-base flex items-center gap-2 justify-center">
+              <Icon icon={Icons.chat} size="md" />
+              WhatsApp
             </Button>
           </a>
         )}

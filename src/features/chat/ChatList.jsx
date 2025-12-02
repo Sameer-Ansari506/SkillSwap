@@ -3,6 +3,7 @@ import { useEffect, useMemo } from 'react';
 import { fetchBookings } from '../bookings/bookingsSlice.js';
 import { fetchMessages, setActivePartner } from './chatSlice.js';
 import ChatWindow from './ChatWindow.jsx';
+import { Icons, Icon } from '../../utils/icons.js';
 
 const ChatList = () => {
   const dispatch = useDispatch();
@@ -44,7 +45,10 @@ const ChatList = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 animate-fade-in">
       <div className="glass rounded-xl sm:rounded-2xl p-4 sm:p-6 space-y-3 sm:space-y-4 shadow-lg">
-        <h3 className="font-bold text-base sm:text-lg gradient-text">💬 Connected Users</h3>
+        <h3 className="font-bold text-base sm:text-lg gradient-text flex items-center gap-2">
+          <Icon icon={Icons.users} size="lg" />
+          Connected Users
+        </h3>
         <p className="text-xs text-slate-500">Chat with users you have bookings with</p>
         <div className="space-y-2 max-h-[300px] md:max-h-[500px] overflow-y-auto">
           {connectedUsers.map((user) => (
@@ -74,7 +78,9 @@ const ChatList = () => {
           ))}
           {connectedUsers.length === 0 && (
             <div className="text-center py-6 sm:py-8">
-              <p className="text-3xl sm:text-4xl mb-2">👥</p>
+              <div className="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-slate-200 to-slate-300 rounded-full flex items-center justify-center">
+                <Icon icon={Icons.users} size="2xl" className="text-slate-500" />
+              </div>
               <p className="text-xs sm:text-sm text-slate-500">No connections yet. Complete a booking to chat!</p>
             </div>
           )}

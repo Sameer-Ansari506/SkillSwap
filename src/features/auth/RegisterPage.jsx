@@ -9,6 +9,7 @@ import Button from '../../components/ui/Button.jsx';
 import Input from '../../components/ui/Input.jsx';
 import SkillsManager from '../../components/forms/SkillsManager.jsx';
 import toast from 'react-hot-toast';
+import { Icons, Icon } from '../../utils/icons.js';
 
 const schema = yup.object({
   name: yup.string().required(),
@@ -51,9 +52,14 @@ const RegisterPage = () => {
     <div className="min-h-screen flex items-center justify-center py-8 sm:py-12 px-4">
       <div className="max-w-md w-full space-y-6 sm:space-y-8 animate-fade-in">
         <div className="text-center">
-          <div className="text-5xl sm:text-6xl lg:text-7xl mb-3 sm:mb-4 animate-bounce-slow">🎉</div>
+          <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 bg-gradient-to-br from-purple-400 to-pink-600 rounded-3xl flex items-center justify-center shadow-2xl animate-bounce-slow">
+            <Icon icon={Icons.fireSolid} size="3xl" className="text-white" />
+          </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black gradient-text text-glow mb-2 sm:mb-3">Join SkillSwap</h2>
-          <p className="text-base sm:text-lg lg:text-xl text-white font-semibold drop-shadow-lg">Start trading skills with peers worldwide 🌍</p>
+          <p className="text-base sm:text-lg lg:text-xl text-white font-semibold drop-shadow-lg flex items-center justify-center gap-2">
+            Start trading skills with peers worldwide
+            <Icon icon={Icons.globe} size="lg" className="text-white" />
+          </p>
         </div>
         <div className="glass rounded-2xl sm:rounded-3xl shadow-2xl p-6 sm:p-8 space-y-5 sm:space-y-6 border-2 sm:border-4 border-white/40 neon-border max-h-[85vh] overflow-y-auto">
           <form className="space-y-4 sm:space-y-5" onSubmit={handleSubmit(onSubmit)}>
@@ -68,7 +74,10 @@ const RegisterPage = () => {
             />
             
             <div className="border-t-2 border-purple-200 pt-4 sm:pt-5">
-              <h3 className="text-base sm:text-lg font-bold gradient-text mb-3 sm:mb-4">🎯 Your Skills</h3>
+              <h3 className="text-base sm:text-lg font-bold gradient-text mb-3 sm:mb-4 flex items-center gap-2">
+                <Icon icon={Icons.trophy} size="lg" />
+                Your Skills
+              </h3>
               <SkillsManager
                 label="What can you teach?"
                 skills={skillsToTeach}
@@ -86,8 +95,18 @@ const RegisterPage = () => {
               />
             </div>
             
-            <Button type="submit" className="w-full btn-gradient text-base sm:text-lg py-3 sm:py-4" disabled={isSubmitting}>
-              {isSubmitting ? '⏳ Creating account...' : '🚀 Sign up free'}
+            <Button type="submit" className="w-full btn-gradient text-base sm:text-lg py-3 sm:py-4 flex items-center gap-2 justify-center" disabled={isSubmitting}>
+              {isSubmitting ? (
+                <>
+                  <Icon icon={Icons.clock} size="md" className="animate-spin" />
+                  Creating account...
+                </>
+              ) : (
+                <>
+                  <Icon icon={Icons.rocket} size="md" />
+                  Sign up free
+                </>
+              )}
             </Button>
           </form>
           <p className="text-center text-xs sm:text-sm font-semibold text-slate-700">

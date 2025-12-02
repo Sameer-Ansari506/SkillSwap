@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Button from '../ui/Button.jsx';
 import useAuth from '../../hooks/useAuth.js';
 import { logout } from '../../features/auth/authSlice.js';
+import { Icons, Icon } from '../../utils/icons.js';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -14,8 +15,8 @@ const Header = () => {
     <header className="gradient-bg sticky top-0 z-50 backdrop-blur-xl border-b-4 border-white/30" style={{ boxShadow: '0 10px 40px rgba(0, 0, 0, 0.3)' }}>
       <div className="max-w-7xl mx-auto flex items-center justify-between py-3 px-4 sm:py-4 sm:px-6">
         <Link to="/" className="flex items-center gap-2 sm:gap-3 group">
-          <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center text-2xl sm:text-3xl transform group-hover:rotate-12 transition-all shadow-lg">
-            🎓
+          <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center transform group-hover:rotate-12 transition-all shadow-lg">
+            <Icon icon={Icons.logoSolid} size="xl" className="text-white" />
           </div>
           <span className="text-xl sm:text-3xl font-black text-white drop-shadow-lg group-hover:scale-110 transition-transform">
             SkillSwap
@@ -28,13 +29,7 @@ const Header = () => {
           className="md:hidden p-2 text-white hover:bg-white/20 rounded-lg transition-all"
           aria-label="Toggle menu"
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            {mobileMenuOpen ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            )}
-          </svg>
+          <Icon icon={mobileMenuOpen ? Icons.close : Icons.menu} size="lg" />
         </button>
 
         {/* Desktop Navigation */}
@@ -43,7 +38,8 @@ const Header = () => {
             to="/discover" 
             className="px-4 py-2 rounded-xl font-bold text-white hover:bg-white/20 transition-all backdrop-blur-sm flex items-center gap-2 hover:scale-105"
           >
-            🔍 Discover
+            <Icon icon={Icons.search} size="md" />
+            Discover
           </Link>
           {isAuthenticated ? (
             <div className="flex gap-3 items-center">
@@ -51,13 +47,15 @@ const Header = () => {
                 to="/dashboard" 
                 className="px-4 py-2 rounded-xl font-bold text-white hover:bg-white/20 transition-all backdrop-blur-sm flex items-center gap-2 hover:scale-105"
               >
-                📊 Dashboard
+                <Icon icon={Icons.dashboard} size="md" />
+                Dashboard
               </Link>
               <button
                 onClick={() => dispatch(logout())}
-                className="px-5 py-2 bg-white/90 hover:bg-white text-purple-600 font-bold rounded-xl shadow-lg hover:shadow-xl transition-all hover:scale-105"
+                className="px-5 py-2 bg-white/90 hover:bg-white text-purple-600 font-bold rounded-xl shadow-lg hover:shadow-xl transition-all hover:scale-105 flex items-center gap-2"
               >
-                👋 Logout
+                <Icon icon={Icons.logout} size="md" />
+                Logout
               </button>
             </div>
           ) : (
@@ -68,8 +66,9 @@ const Header = () => {
                 </button>
               </Link>
               <Link to="/register">
-                <button className="px-5 py-2 bg-white hover:bg-white/95 text-purple-600 font-bold rounded-xl shadow-lg hover:shadow-xl transition-all hover:scale-105">
-                  🚀 Sign up free
+                <button className="px-5 py-2 bg-white hover:bg-white/95 text-purple-600 font-bold rounded-xl shadow-lg hover:shadow-xl transition-all hover:scale-105 flex items-center gap-2">
+                  <Icon icon={Icons.rocket} size="md" />
+                  Sign up free
                 </button>
               </Link>
             </div>
@@ -86,7 +85,8 @@ const Header = () => {
               onClick={() => setMobileMenuOpen(false)}
               className="px-4 py-3 rounded-xl font-bold text-white hover:bg-white/20 transition-all backdrop-blur-sm flex items-center gap-2 text-center justify-center"
             >
-              🔍 Discover
+              <Icon icon={Icons.search} size="md" />
+              Discover
             </Link>
             {isAuthenticated ? (
               <>
@@ -95,16 +95,18 @@ const Header = () => {
                   onClick={() => setMobileMenuOpen(false)}
                   className="px-4 py-3 rounded-xl font-bold text-white hover:bg-white/20 transition-all backdrop-blur-sm flex items-center gap-2 text-center justify-center"
                 >
-                  📊 Dashboard
+                  <Icon icon={Icons.dashboard} size="md" />
+                  Dashboard
                 </Link>
                 <button
                   onClick={() => {
                     dispatch(logout());
                     setMobileMenuOpen(false);
                   }}
-                  className="px-5 py-3 bg-white/90 hover:bg-white text-purple-600 font-bold rounded-xl shadow-lg hover:shadow-xl transition-all"
+                  className="px-5 py-3 bg-white/90 hover:bg-white text-purple-600 font-bold rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center gap-2 justify-center"
                 >
-                  👋 Logout
+                  <Icon icon={Icons.logout} size="md" />
+                  Logout
                 </button>
               </>
             ) : (
@@ -115,8 +117,9 @@ const Header = () => {
                   </button>
                 </Link>
                 <Link to="/register" onClick={() => setMobileMenuOpen(false)}>
-                  <button className="w-full px-5 py-3 bg-white hover:bg-white/95 text-purple-600 font-bold rounded-xl shadow-lg hover:shadow-xl transition-all">
-                    🚀 Sign up free
+                  <button className="w-full px-5 py-3 bg-white hover:bg-white/95 text-purple-600 font-bold rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center gap-2 justify-center">
+                    <Icon icon={Icons.rocket} size="md" />
+                    Sign up free
                   </button>
                 </Link>
               </>

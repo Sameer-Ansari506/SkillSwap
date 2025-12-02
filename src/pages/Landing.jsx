@@ -1,17 +1,18 @@
 import { Link } from 'react-router-dom';
 import Button from '../components/ui/Button.jsx';
+import { Icons, Icon } from '../utils/icons.js';
 
 const steps = [
-  { icon: '👤', title: 'Create Profile', desc: 'List skills you teach and want to learn' },
-  { icon: '🔍', title: 'Discover Peers', desc: 'Browse mentors and learners worldwide' },
-  { icon: '🤝', title: 'Start Swapping', desc: 'Send requests, schedule, and learn together' }
+  { icon: Icons.profile, title: 'Create Profile', desc: 'List skills you teach and want to learn' },
+  { icon: Icons.search, title: 'Discover Peers', desc: 'Browse mentors and learners worldwide' },
+  { icon: Icons.handshake, title: 'Start Swapping', desc: 'Send requests, schedule, and learn together' }
 ];
 
 const features = [
-  { icon: '⚡', title: 'Instant Match', desc: 'AI-powered skill matching' },
-  { icon: '💬', title: 'Real-time Chat', desc: 'Connect via in-app or WhatsApp' },
-  { icon: '⭐', title: 'Peer Reviews', desc: 'Build trust with ratings' },
-  { icon: '📅', title: 'Easy Scheduling', desc: 'Propose and confirm sessions' }
+  { icon: Icons.boltSolid, title: 'Instant Match', desc: 'AI-powered skill matching' },
+  { icon: Icons.chat, title: 'Real-time Chat', desc: 'Connect via in-app or WhatsApp' },
+  { icon: Icons.starSolid, title: 'Peer Reviews', desc: 'Build trust with ratings' },
+  { icon: Icons.calendar, title: 'Easy Scheduling', desc: 'Propose and confirm sessions' }
 ];
 
 const Landing = () => (
@@ -21,8 +22,9 @@ const Landing = () => (
       <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 items-center">
         <div className="space-y-6 sm:space-y-8 animate-slide-up">
           <div className="inline-block">
-            <span className="px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-brand-100 to-accent-100 text-brand-700 rounded-full text-xs sm:text-sm font-semibold">
-              🎓 Peer tutoring reimagined
+            <span className="px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-brand-100 to-accent-100 text-brand-700 rounded-full text-xs sm:text-sm font-semibold flex items-center gap-2">
+              <Icon icon={Icons.logoSolid} size="sm" />
+              Peer tutoring reimagined
             </span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight">
@@ -55,8 +57,8 @@ const Landing = () => (
             </div>
             <div className="space-y-3 sm:space-y-4">
               <div className="flex items-center gap-3 sm:gap-4">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center text-white text-lg sm:text-xl flex-shrink-0">
-                  🎸
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-brand-400 to-brand-600 flex items-center justify-center text-white flex-shrink-0">
+                  <Icon icon={Icons.sparklesSolid} size="lg" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="font-semibold text-slate-900 text-sm sm:text-base truncate">Spanish ↔️ Guitar</p>
@@ -64,10 +66,12 @@ const Landing = () => (
                 </div>
               </div>
               <div className="flex items-center gap-2 text-xs sm:text-sm text-slate-600">
-                <span>📅 Tomorrow • 6:00 PM</span>
+                <Icon icon={Icons.calendar} size="sm" />
+                <span>Tomorrow • 6:00 PM</span>
               </div>
               <div className="flex items-center gap-2 text-xs sm:text-sm text-slate-600">
-                <span>💻 Online meeting</span>
+                <Icon icon={Icons.computer} size="sm" />
+                <span>Online meeting</span>
               </div>
             </div>
             <Button className="w-full btn-gradient-accent text-sm sm:text-base">Join Session</Button>
@@ -90,7 +94,11 @@ const Landing = () => (
               className="glass rounded-xl sm:rounded-2xl p-6 sm:p-8 card-hover text-center space-y-3 sm:space-y-4"
               style={{ animationDelay: `${idx * 100}ms` }}
             >
-              <div className="text-4xl sm:text-5xl mb-3 sm:mb-4 animate-bounce-slow">{step.icon}</div>
+              <div className="mb-3 sm:mb-4 flex justify-center">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-brand-400 to-brand-600 rounded-2xl flex items-center justify-center shadow-lg animate-bounce-slow">
+                  <Icon icon={step.icon} size="2xl" className="text-white" />
+                </div>
+              </div>
               <h3 className="text-lg sm:text-xl font-bold text-slate-900">{step.title}</h3>
               <p className="text-sm sm:text-base text-slate-600">{step.desc}</p>
             </div>
@@ -107,7 +115,9 @@ const Landing = () => (
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {features.map((feature) => (
             <div key={feature.title} className="glass rounded-lg sm:rounded-xl p-4 sm:p-6 card-hover space-y-2 sm:space-y-3">
-              <div className="text-3xl sm:text-4xl">{feature.icon}</div>
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-accent-400 to-accent-600 rounded-xl flex items-center justify-center shadow-md">
+                <Icon icon={feature.icon} size="lg" className="text-white" />
+              </div>
               <h4 className="font-bold text-sm sm:text-base lg:text-lg">{feature.title}</h4>
               <p className="text-xs sm:text-sm text-slate-600">{feature.desc}</p>
             </div>

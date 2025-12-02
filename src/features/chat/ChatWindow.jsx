@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../components/ui/Button.jsx';
 import useSocket from '../../hooks/useSocket.js';
 import { receiveSocketMessage, sendMessageAsync } from './chatSlice.js';
+import { Icons, Icon } from '../../utils/icons.js';
 
 const ChatWindow = () => {
   const dispatch = useDispatch();
@@ -49,7 +50,9 @@ const ChatWindow = () => {
     return (
       <div className="glass rounded-xl sm:rounded-2xl p-8 sm:p-12 text-center shadow-lg h-full flex items-center justify-center">
         <div>
-          <p className="text-5xl sm:text-6xl mb-3 sm:mb-4">💬</p>
+          <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-brand-400 to-brand-600 rounded-full flex items-center justify-center">
+            <Icon icon={Icons.chat} size="3xl" className="text-white" />
+          </div>
           <p className="text-base sm:text-lg lg:text-xl text-slate-600">Select a contact to start chatting</p>
         </div>
       </div>
@@ -59,13 +62,18 @@ const ChatWindow = () => {
   return (
     <div className="glass rounded-xl sm:rounded-2xl shadow-lg flex flex-col h-[500px] sm:h-[600px]">
       <div className="p-3 sm:p-4 border-b border-white/20">
-        <h3 className="font-bold text-base sm:text-lg gradient-text">Chat</h3>
+        <h3 className="font-bold text-base sm:text-lg gradient-text flex items-center gap-2">
+          <Icon icon={Icons.chat} size="lg" />
+          Chat
+        </h3>
       </div>
       
       <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-2 sm:space-y-3">
         {messages.length === 0 && (
           <div className="text-center py-6 sm:py-8">
-            <p className="text-3xl sm:text-4xl mb-2">👋</p>
+            <div className="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-accent-400 to-accent-600 rounded-full flex items-center justify-center">
+              <Icon icon={Icons.sparklesSolid} size="2xl" className="text-white" />
+            </div>
             <p className="text-xs sm:text-sm text-slate-500">Start the conversation!</p>
           </div>
         )}
@@ -100,7 +108,7 @@ const ChatWindow = () => {
           onChange={(e) => setText(e.target.value)}
         />
         <Button type="submit" className="btn-gradient px-4 sm:px-6 text-sm sm:text-base">
-          📤
+          <Icon icon={Icons.send} size="md" />
         </Button>
       </form>
     </div>
