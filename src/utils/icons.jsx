@@ -119,4 +119,3 @@ export const Icon = ({ icon: IconComponent, className = '', size = 'md', ...prop
 };
 
 export default Icons;
-
