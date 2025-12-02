@@ -107,3 +107,58 @@
     }
   }
 }
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  border: 0px;
+  position: relative;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.glass-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0;
+
+  background: linear-gradient(
+      135deg, 
+      rgba(202, 11, 245, 0.8) 0%,
+      rgba(139, 92, 246, 0.8) 30%,
+      rgba(236, 107, 72, 0.8) 100%
+  );
+
+  transform: scale(0);
+  transform-origin: center;
+  transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+  border-radius: inherit;
+}
+
+.glass-card:hover::before {
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* Optional: Smoothly change the text color on hover for better contrast against the new background */
+.glass-card:hover h1, 
+.glass-card:hover p, 
+.glass-card:hover .text-sm,
+.glass-card:hover hr {
+  color: white;
+  border-color: white;
+  transition: color 0.5s ease, border-color 0.5s ease;
+}
+
+.register-card {
+display: flex;
+flex-direction: row;
+gap: 1rem;
+}

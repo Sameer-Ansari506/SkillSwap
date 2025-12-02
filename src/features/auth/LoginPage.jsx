@@ -8,6 +8,7 @@ import Button from '../../components/ui/Button.jsx';
 import Input from '../../components/ui/Input.jsx';
 import toast from 'react-hot-toast';
 import { Icons, Icon } from '../../utils/icons.jsx';
+import '../../index.css';
 
 const schema = yup.object({
   email: yup.string().email().required(),
@@ -46,10 +47,19 @@ const LoginPage = () => {
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black gradient-text text-glow mb-2 sm:mb-3">Welcome Back!</h2>
           <p className="text-base sm:text-lg lg:text-xl text-white font-semibold drop-shadow-lg">Continue your learning journey</p>
         </div>
-        <div className="glass rounded-2xl sm:rounded-3xl shadow-2xl p-6 sm:p-8 space-y-5 sm:space-y-6 border-2 sm:border-4 border-white/40 neon-border">
+        <div className="glass rounded-2xl sm:rounded-3xl shadow-2xl p-6 sm:p-8 space-y-5 sm:space-y-6 border-2 sm:border-4 border-white/40 neon-border glass-card">
           <form className="space-y-4 sm:space-y-5" onSubmit={handleSubmit(onSubmit)}>
-            <Input label="Email" type="email" {...register('email')} error={errors.email?.message} />
-            <Input label="Password" type="password" {...register('password')} error={errors.password?.message} />
+            <Input
+             className="w-full p-3 rounded-xl border border-white/30 bg-white/10 placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50 transition duration-150"
+             placeholder="Email" 
+             type="email" {...register('email')} 
+             error={errors.email?.message} />
+
+            <Input 
+            className="w-full p-3 rounded-xl border border-white/30 bg-white/10 placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50 transition duration-150"
+            placeholder="Password" 
+            type="password" {...register('password')} 
+            error={errors.password?.message} />
             <Button type="submit" className="w-full btn-gradient text-base sm:text-lg py-3 sm:py-4 flex items-center gap-2 justify-center" disabled={isSubmitting}>
               {isSubmitting ? (
                 <>

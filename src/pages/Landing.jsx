@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import Button from '../components/ui/Button.jsx';
 import { Icons, Icon } from '../utils/icons.jsx';
+import '../index.css';
 
 const steps = [
   { icon: Icons.profile, title: 'Create Profile', desc: 'List skills you teach and want to learn' },
@@ -47,8 +48,8 @@ const Landing = () => (
             </Link>
           </div>
         </div>
-        <div className="relative mt-8 lg:mt-0">
-          <div className="glass rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-2xl card-hover space-y-4 sm:space-y-6">
+        <div className="relative mt-8 lg:mt-0" >
+          <div className="glass rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-2xl card-hover space-y-4 sm:space-y-6 glass-card">
             <div className="flex items-center justify-between">
               <h3 className="font-bold text-lg sm:text-xl">Upcoming Session</h3>
               <span className="px-2 sm:px-3 py-1 bg-accent-100 text-accent-700 rounded-full text-xs font-semibold">
@@ -91,7 +92,7 @@ const Landing = () => (
           {steps.map((step, idx) => (
             <div
               key={step.title}
-              className="glass rounded-xl sm:rounded-2xl p-6 sm:p-8 card-hover text-center space-y-3 sm:space-y-4"
+              className="glass rounded-xl sm:rounded-2xl p-6 sm:p-8 card-hover text-center space-y-3 sm:space-y-4 glass-card"
               style={{ animationDelay: `${idx * 100}ms` }}
             >
               <div className="mb-3 sm:mb-4 flex justify-center">
@@ -114,7 +115,7 @@ const Landing = () => (
         </div>
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {features.map((feature) => (
-            <div key={feature.title} className="glass rounded-lg sm:rounded-xl p-4 sm:p-6 card-hover space-y-2 sm:space-y-3">
+            <div key={feature.title} className="glass rounded-lg sm:rounded-xl p-4 sm:p-6 card-hover space-y-2 sm:space-y-3 glass-card">
               <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-accent-400 to-accent-600 rounded-xl flex items-center justify-center shadow-md">
                 <Icon icon={feature.icon} size="lg" className="text-white" />
               </div>
@@ -126,7 +127,7 @@ const Landing = () => (
       </div>
 
       {/* CTA */}
-      <div className="glass rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-12 text-center space-y-4 sm:space-y-6 shadow-2xl">
+      <div className="glass rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-12 text-center space-y-4 sm:space-y-6 shadow-2xl glass-card">
         <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold gradient-text">Ready to start learning?</h2>
         <p className="text-base sm:text-lg lg:text-xl text-slate-600">Join thousands of learners trading skills every day</p>
         <Link to="/register" className="inline-block w-full sm:w-auto">
