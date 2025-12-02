@@ -138,7 +138,7 @@
 
   transform: scale(0);
   transform-origin: center;
-  transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+  transition: transform 0.3s ease-out, opacity 0.5s ease-out;
   border-radius: inherit;
 }
 
