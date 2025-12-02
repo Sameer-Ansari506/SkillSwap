@@ -1,8 +1,12 @@
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import Button from '../../components/ui/Button.jsx';
 import Rating from '../../components/ui/Rating.jsx';
 import SkillTag from '../../components/forms/SkillTag.jsx';
+import Modal from '../../components/ui/Modal.jsx';
+import Input from '../../components/ui/Input.jsx';
 import { createRequestAsync } from '../requests/requestsSlice.js';
 import useAuth from '../../hooks/useAuth.js';
 import { Icons, Icon } from '../../utils/icons.jsx';
@@ -10,27 +14,67 @@ import { Icons, Icon } from '../../utils/icons.jsx';
 const UserCard = ({ user }) => {
   const dispatch = useDispatch();
   const { isAuthenticated } = useAuth();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  const { register, handleSubmit, reset, formState: { errors } } = useForm({
+    defaultValues: {
+      offeredSkill: '',
+      requestedSkill: '',
+      description: '',
+      proposedTime1: '',
+      proposedTime2: '',
+      meetingLink: ''
+    }
+  });
 
-  const handleRequest = () => {
+  const handleOpenModal = () => {
     if (!isAuthenticated) {
       toast.error('Log in to request a swap.');
       return;
     }
-    const defaultSlots = [1, 3].map((days) => ({
-      proposedTime: new Date(Date.now() + days * 24 * 60 * 60 * 1000).toISOString(),
-      note: `Auto-suggested slot in ${days} day(s)`
-    }));
+    // Pre-fill with user's skills
+    reset({
+      offeredSkill: user.skillsToLearn?.[0]?.name || '',
+      requestedSkill: user.skillsToTeach?.[0]?.name || '',
+      description: '',
+      proposedTime1: '',
+      proposedTime2: '',
+      meetingLink: ''
+    });
+    setIsModalOpen(true);
+  };
+
+  const onSubmit = (values) => {
+    const scheduleProposals = [];
+    if (values.proposedTime1) {
+      scheduleProposals.push({
+        proposedTime: new Date(values.proposedTime1).toISOString(),
+        note: 'First preference'
+      });
+    }
+    if (values.proposedTime2) {
+      scheduleProposals.push({
+        proposedTime: new Date(values.proposedTime2).toISOString(),
+        note: 'Alternative time'
+      });
+    }
+
     dispatch(
       createRequestAsync({
         toUser: user._id,
-        offeredSkill: user.skillsToLearn?.[0]?.name || 'General mentoring',
-        requestedSkill: user.skillsToTeach?.[0]?.name || 'Knowledge share',
-        description: 'Automated request via Discover page',
-        scheduleProposals: defaultSlots
+        offeredSkill: values.offeredSkill || 'General mentoring',
+        requestedSkill: values.requestedSkill || 'Knowledge share',
+        description: values.description || 'Request from Discover page',
+        scheduleProposals: scheduleProposals.length > 0 ? scheduleProposals : undefined,
+        meetingLink: values.meetingLink || undefined
       })
     )
       .unwrap()
-      .then(() => toast.success('Request sent! We will notify you when accepted.'))
+      .then(() => {
+        toast.success('Request sent! We will notify you when accepted.');
+        setIsModalOpen(false);
+        reset();
+      })
       .catch(() => toast.error('Could not send request'));
   };
 
@@ -84,7 +128,7 @@ const UserCard = ({ user }) => {
       </div>
       
       <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-2">
-        <Button className="flex-1 btn-gradient text-white font-bold text-sm sm:text-base flex items-center gap-2 justify-center" onClick={handleRequest}>
+        <Button className="flex-1 btn-gradient text-white font-bold text-sm sm:text-base flex items-center gap-2 justify-center" onClick={handleOpenModal}>
           <Icon icon={Icons.handshake} size="md" />
           Request Swap
         </Button>
@@ -102,6 +146,79 @@ const UserCard = ({ user }) => {
           </a>
         )}
       </div>
+
+      {/* Request Modal */}
+      <Modal
+        title={`Request Swap with ${user.name}`}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      >
+        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+          <Input
+            label="What can you offer?"
+            placeholder="e.g., JavaScript, Guitar"
+            {...register('offeredSkill', { required: 'This field is required' })}
+            error={errors.offeredSkill?.message}
+          />
+          
+          <Input
+            label="What do you want to learn?"
+            placeholder="e.g., Python, Piano"
+            {...register('requestedSkill', { required: 'This field is required' })}
+            error={errors.requestedSkill?.message}
+          />
+          
+          <label className="flex flex-col gap-2 text-sm">
+            <span className="font-bold text-slate-800">Message (optional)</span>
+            <textarea
+              {...register('description')}
+              className="border-2 border-purple-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400 bg-white shadow-sm"
+              rows={3}
+              placeholder="Tell them why you'd like to connect..."
+            />
+          </label>
+
+          <div className="border-t pt-4 space-y-3">
+            <h4 className="font-semibold text-sm text-slate-700 flex items-center gap-2">
+              <Icon icon={Icons.calendar} size="sm" />
+              Suggest Session Times (optional)
+            </h4>
+            
+            <Input
+              type="datetime-local"
+              label="First preference"
+              {...register('proposedTime1')}
+            />
+            
+            <Input
+              type="datetime-local"
+              label="Alternative time"
+              {...register('proposedTime2')}
+            />
+          </div>
+
+          <Input
+            label="Meeting Link (optional)"
+            placeholder="e.g., Zoom, Google Meet, or location"
+            {...register('meetingLink')}
+          />
+
+          <div className="flex gap-3 pt-2">
+            <Button type="submit" className="flex-1 btn-gradient flex items-center gap-2 justify-center">
+              <Icon icon={Icons.send} size="md" />
+              Send Request
+            </Button>
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={() => setIsModalOpen(false)}
+              className="flex-1"
+            >
+              Cancel
+            </Button>
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 };

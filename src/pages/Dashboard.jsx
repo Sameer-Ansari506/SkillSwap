@@ -1,21 +1,60 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Button from '../components/ui/Button.jsx';
 import { fetchRequests } from '../features/requests/requestsSlice.js';
 import { fetchBookings } from '../features/bookings/bookingsSlice.js';
+import { fetchUsers } from '../features/users/usersSlice.js';
 import { Icons, Icon } from '../utils/icons.jsx';
+import SkillTag from '../components/forms/SkillTag.jsx';
+import UserCard from '../features/discover/UserCard.jsx';
 
 const Dashboard = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const { items: requests } = useSelector((state) => state.requests);
   const { items: bookings } = useSelector((state) => state.bookings);
+  const { list: allUsers } = useSelector((state) => state.users);
+  const [showSkillsSection, setShowSkillsSection] = useState(true);
 
   useEffect(() => {
     dispatch(fetchRequests());
     dispatch(fetchBookings());
+    dispatch(fetchUsers({}));
   }, [dispatch]);
+
+  // Calculate suggested users based on skill matching
+  const suggestedUsers = allUsers
+    .filter(u => u._id !== user?._id)
+    .map(u => {
+      const userWantsToLearn = user?.skillsToLearn?.map(s => s.name.toLowerCase()) || [];
+      const userCanTeach = user?.skillsToTeach?.map(s => s.name.toLowerCase()) || [];
+      const otherCanTeach = u.skillsToTeach?.map(s => s.name.toLowerCase()) || [];
+      const otherWantsToLearn = u.skillsToLearn?.map(s => s.name.toLowerCase()) || [];
+      
+      const matchScore = 
+        userWantsToLearn.filter(skill => otherCanTeach.includes(skill)).length * 2 +
+        userCanTeach.filter(skill => otherWantsToLearn.includes(skill)).length * 2;
+      
+      return { ...u, matchScore };
+    })
+    .filter(u => u.matchScore > 0)
+    .sort((a, b) => b.matchScore - a.matchScore)
+    .slice(0, 4);
+
+  // Analytics data
+  const analytics = {
+    totalRequests: requests.length,
+    acceptedRequests: requests.filter(r => r.status === 'accepted').length,
+    pendingRequests: requests.filter(r => r.status === 'pending').length,
+    declinedRequests: requests.filter(r => r.status === 'declined').length,
+    totalBookings: bookings.length,
+    completedBookings: bookings.filter(b => b.isCompleted).length,
+    upcomingBookings: bookings.filter(b => !b.isCompleted).length,
+    totalSkills: (user?.skillsToTeach?.length || 0) + (user?.skillsToLearn?.length || 0),
+    skillsToTeach: user?.skillsToTeach?.length || 0,
+    skillsToLearn: user?.skillsToLearn?.length || 0
+  };
 
   return (
     <div className="space-y-6 sm:space-y-8 animate-fade-in">
@@ -37,11 +76,152 @@ const Dashboard = () => {
         </div>
       </div>
 
+      {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
-        <StatCard title="My Skills" value={user?.skillsToTeach?.length || 0} icon={Icons.trophy} color="purple" />
-        <StatCard title="Pending Requests" value={requests.filter((r) => r.status === 'pending').length} icon={Icons.inbox} color="accent" />
-        <StatCard title="Upcoming Bookings" value={bookings.filter((b) => !b.isCompleted).length} icon={Icons.calendar} color="brand" />
+        <StatCard title="My Skills" value={analytics.totalSkills} icon={Icons.trophy} color="purple" />
+        <StatCard title="Pending Requests" value={analytics.pendingRequests} icon={Icons.inbox} color="accent" />
+        <StatCard title="Upcoming Bookings" value={analytics.upcomingBookings} icon={Icons.calendar} color="brand" />
       </div>
+
+      {/* Skills Section */}
+      <div className="glass rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="font-bold text-lg sm:text-xl gradient-text flex items-center gap-2">
+            <Icon icon={Icons.trophy} size="lg" />
+            My Skills
+          </h3>
+          <Link to="/profile/edit/me">
+            <Button variant="secondary" className="text-xs sm:text-sm flex items-center gap-1">
+              <Icon icon={Icons.edit} size="sm" />
+              Edit Skills
+            </Button>
+          </Link>
+        </div>
+        
+        <div className="grid md:grid-cols-2 gap-4">
+          {/* Skills to Teach */}
+          <div className="space-y-3">
+            <h4 className="font-semibold text-sm text-slate-700 flex items-center gap-2">
+              <Icon icon={Icons.sparklesSolid} size="sm" className="text-green-500" />
+              I can teach ({analytics.skillsToTeach})
+            </h4>
+            <div className="flex flex-wrap gap-2">
+              {user?.skillsToTeach?.length > 0 ? (
+                user.skillsToTeach.map((skill, idx) => (
+                  <SkillTag key={idx} label={`${skill.name} (${skill.level})`} />
+                ))
+              ) : (
+                <p className="text-sm text-slate-500 italic">No skills added yet</p>
+              )}
+            </div>
+          </div>
+
+          {/* Skills to Learn */}
+          <div className="space-y-3">
+            <h4 className="font-semibold text-sm text-slate-700 flex items-center gap-2">
+              <Icon icon={Icons.lightbulb} size="sm" className="text-blue-500" />
+              I want to learn ({analytics.skillsToLearn})
+            </h4>
+            <div className="flex flex-wrap gap-2">
+              {user?.skillsToLearn?.length > 0 ? (
+                user.skillsToLearn.map((skill, idx) => (
+                  <SkillTag key={idx} label={`${skill.name} (${skill.level})`} />
+                ))
+              ) : (
+                <p className="text-sm text-slate-500 italic">No skills added yet</p>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Analytics Section */}
+      <div className="glass rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg">
+        <h3 className="font-bold text-lg sm:text-xl gradient-text flex items-center gap-2 mb-6">
+          <Icon icon={Icons.dashboard} size="lg" />
+          Analytics & Insights
+        </h3>
+        
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <AnalyticCard 
+            label="Total Requests" 
+            value={analytics.totalRequests} 
+            icon={Icons.inbox}
+            color="blue"
+          />
+          <AnalyticCard 
+            label="Accepted" 
+            value={analytics.acceptedRequests} 
+            icon={Icons.checkSolid}
+            color="green"
+          />
+          <AnalyticCard 
+            label="Completed Sessions" 
+            value={analytics.completedBookings} 
+            icon={Icons.calendar}
+            color="purple"
+          />
+          <AnalyticCard 
+            label="Success Rate" 
+            value={analytics.totalRequests > 0 ? `${Math.round((analytics.acceptedRequests / analytics.totalRequests) * 100)}%` : '0%'} 
+            icon={Icons.trophy}
+            color="yellow"
+          />
+        </div>
+
+        {/* Progress Bars */}
+        <div className="mt-6 space-y-4">
+          <div>
+            <div className="flex justify-between text-sm mb-2">
+              <span className="font-semibold text-slate-700">Request Acceptance Rate</span>
+              <span className="text-slate-600">{analytics.totalRequests > 0 ? Math.round((analytics.acceptedRequests / analytics.totalRequests) * 100) : 0}%</span>
+            </div>
+            <div className="w-full bg-slate-200 rounded-full h-3 overflow-hidden">
+              <div 
+                className="bg-gradient-to-r from-green-400 to-green-600 h-3 rounded-full transition-all duration-500"
+                style={{ width: `${analytics.totalRequests > 0 ? (analytics.acceptedRequests / analytics.totalRequests) * 100 : 0}%` }}
+              />
+            </div>
+          </div>
+
+          <div>
+            <div className="flex justify-between text-sm mb-2">
+              <span className="font-semibold text-slate-700">Session Completion Rate</span>
+              <span className="text-slate-600">{analytics.totalBookings > 0 ? Math.round((analytics.completedBookings / analytics.totalBookings) * 100) : 0}%</span>
+            </div>
+            <div className="w-full bg-slate-200 rounded-full h-3 overflow-hidden">
+              <div 
+                className="bg-gradient-to-r from-purple-400 to-purple-600 h-3 rounded-full transition-all duration-500"
+                style={{ width: `${analytics.totalBookings > 0 ? (analytics.completedBookings / analytics.totalBookings) * 100 : 0}%` }}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Suggested Profiles */}
+      {suggestedUsers.length > 0 && (
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="font-bold text-lg sm:text-xl gradient-text flex items-center gap-2">
+              <Icon icon={Icons.sparklesSolid} size="lg" className="text-yellow-500" />
+              Suggested for You
+            </h3>
+            <Link to="/discover">
+              <Button variant="secondary" className="text-xs sm:text-sm">
+                View All
+              </Button>
+            </Link>
+          </div>
+          <p className="text-sm text-slate-600">Based on your skills and interests</p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {suggestedUsers.map((user) => (
+              <UserCard key={user._id} user={user} />
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         <Panel title="Upcoming Bookings" icon={Icons.calendar}>
@@ -100,6 +280,30 @@ const StatCard = ({ title, value, icon, color }) => {
           <Icon icon={icon} size="3xl" className="text-white drop-shadow-2xl" />
         </div>
         <p className="text-3xl sm:text-4xl lg:text-5xl font-black text-white drop-shadow-lg">{value}</p>
+      </div>
+    </div>
+  );
+};
+
+const AnalyticCard = ({ label, value, icon, color }) => {
+  const colors = {
+    blue: 'from-blue-400 to-blue-600',
+    green: 'from-green-400 to-green-600',
+    purple: 'from-purple-400 to-purple-600',
+    yellow: 'from-yellow-400 to-yellow-600',
+    red: 'from-red-400 to-red-600'
+  };
+
+  return (
+    <div className="bg-white rounded-xl p-4 shadow-md hover:shadow-lg transition-all">
+      <div className="flex items-center gap-3">
+        <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${colors[color]} flex items-center justify-center shadow-md`}>
+          <Icon icon={icon} size="lg" className="text-white" />
+        </div>
+        <div>
+          <p className="text-xs text-slate-500 font-medium">{label}</p>
+          <p className="text-2xl font-black text-slate-900">{value}</p>
+        </div>
       </div>
     </div>
   );
