@@ -16,6 +16,11 @@ const DiscoverPage = () => {
   const [skillFilter, setSkillFilter] = useState('');
   const [selectedUser, setSelectedUser] = useState(null);
 
+  const handleRequestSwap = (user) => {
+    console.log('DiscoverPage: handleRequestSwap called with user:', user);
+    setSelectedUser(user);
+  };
+
   useEffect(() => {
     dispatch(fetchUsers({ q: debounced, location, skill: skillFilter }));
   }, [dispatch, debounced, location, skillFilter]);
@@ -52,7 +57,7 @@ const DiscoverPage = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         {list.map((user) => (
-          <UserCard key={user._id} user={user} onRequestSwap={() => setSelectedUser(user)} />
+          <UserCard key={user._id} user={user} onRequestSwap={() => handleRequestSwap(user)} />
         ))}
       </div>
 
@@ -61,7 +66,10 @@ const DiscoverPage = () => {
         <RequestSwapModal 
           user={selectedUser} 
           isOpen={!!selectedUser}
-          onClose={() => setSelectedUser(null)} 
+          onClose={() => {
+            console.log('DiscoverPage: Closing modal');
+            setSelectedUser(null);
+          }} 
         />
       )}
       

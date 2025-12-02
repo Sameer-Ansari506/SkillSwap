@@ -9,6 +9,10 @@ import { createRequestAsync } from '../requests/requestsSlice.js';
 import { Icons, Icon } from '../../utils/icons.jsx';
 
 const RequestSwapModal = ({ user, isOpen, onClose }) => {
+  console.log('RequestSwapModal: Rendering');
+  console.log('RequestSwapModal: user:', user);
+  console.log('RequestSwapModal: isOpen:', isOpen);
+  
   const dispatch = useDispatch();
   
   const { register, handleSubmit, reset, formState: { errors } } = useForm({

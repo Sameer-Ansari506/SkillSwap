@@ -9,10 +9,16 @@ const UserCard = ({ user, onRequestSwap }) => {
   const { isAuthenticated } = useAuth();
 
   const handleOpenModal = () => {
+    console.log('UserCard: Request Swap clicked');
+    console.log('UserCard: isAuthenticated:', isAuthenticated);
+    console.log('UserCard: onRequestSwap:', typeof onRequestSwap);
+    
     if (!isAuthenticated) {
       toast.error('Log in to request a swap.');
       return;
     }
+    
+    console.log('UserCard: Calling onRequestSwap()');
     onRequestSwap();
   };
 
