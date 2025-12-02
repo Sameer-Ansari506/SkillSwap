@@ -60,7 +60,7 @@ const Dashboard = () => {
     <div className="space-y-6 sm:space-y-8 animate-fade-in">
       <div className="glass rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <div>
+        <div>
             <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold gradient-text flex items-center gap-2">
               Welcome back, {user?.name}!
               <Icon icon={Icons.sparklesSolid} size="lg" className="text-yellow-500" />
@@ -96,9 +96,9 @@ const Dashboard = () => {
               Edit Skills
             </Button>
           </Link>
-        </div>
-        
-        <div className="grid md:grid-cols-2 gap-4">
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-4">
           {/* Skills to Teach */}
           <div className="space-y-3">
             <h4 className="font-semibold text-sm text-slate-700 flex items-center gap-2">
@@ -305,8 +305,8 @@ const AnalyticCard = ({ label, value, icon, color }) => {
           <p className="text-2xl font-black text-slate-900">{value}</p>
         </div>
       </div>
-    </div>
-  );
+  </div>
+);
 };
 
 export default Dashboard;

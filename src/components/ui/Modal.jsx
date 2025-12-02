@@ -47,32 +47,37 @@ const Modal = ({ title, children, isOpen, onClose, footer }) => {
       }}
     >
       <div 
-        className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto border-2 border-purple-300"
+        className="rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto border-2 border-white/40 animate-slide-up"
         onClick={(e) => e.stopPropagation()}
-        style={{ backgroundColor: 'white' }}
+        style={{
+          backgroundColor: 'white',
+          position: 'relative',
+          zIndex: 100000
+        }}
       >
         {/* Header */}
-        <div className="bg-gradient-to-r from-purple-500 to-pink-500 px-4 sm:px-6 py-4 flex items-center justify-between rounded-t-2xl">
-          <h3 className="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
-            ✨ {title}
+        <div className="sticky top-0 bg-white/95 backdrop-blur-sm border-b-2 border-purple-200 px-4 sm:px-6 py-4 flex items-center justify-between z-10">
+          <h3 className="text-lg sm:text-xl font-bold gradient-text flex items-center gap-2">
+            <Icon icon={Icons.sparklesSolid} size="md" className="text-purple-500" />
+            {title}
           </h3>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-white/20 rounded-full transition-all text-white text-2xl font-bold"
+            className="p-2 hover:bg-purple-100 rounded-full transition-all hover:scale-110 active:scale-95"
             aria-label="Close modal"
           >
-            ×
+            <Icon icon={Icons.xMark} size="lg" className="text-slate-600" />
           </button>
         </div>
 
         {/* Content */}
-        <div className="px-4 sm:px-6 py-4 sm:py-6 bg-white">
+        <div className="px-4 sm:px-6 py-4 sm:py-6">
           {children}
         </div>
 
         {/* Footer */}
         {footer && (
-          <div className="bg-gray-50 px-4 sm:px-6 py-4 flex justify-end gap-2 rounded-b-2xl">
+          <div className="sticky bottom-0 bg-white/95 backdrop-blur-sm border-t-2 border-purple-200 px-4 sm:px-6 py-4 flex justify-end gap-2">
             {footer}
           </div>
         )}

@@ -69,7 +69,7 @@ const RequestsPage = () => {
     )
       .unwrap()
       .then(() => {
-        toast.success('Request accepted! Booking created.');
+          toast.success('Request accepted! Booking created.');
         closeModal();
       })
       .catch(() => toast.error('Unable to update request'));
@@ -102,7 +102,7 @@ const RequestsPage = () => {
                   <span className="text-2xl">{isIncoming ? '📥' : '📤'}</span>
                   <p className="font-bold text-xl text-slate-900">
                     {request.offeredSkill} ↔️ {request.requestedSkill}
-                  </p>
+          </p>
                 </div>
                 <p className="text-sm text-slate-600">
                   {isIncoming ? (
@@ -150,7 +150,7 @@ const RequestsPage = () => {
                   className="flex-1"
                 >
                   ❌ Decline
-                </Button>
+            </Button>
               </div>
             )}
             

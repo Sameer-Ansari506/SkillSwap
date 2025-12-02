@@ -48,13 +48,13 @@ const Sidebar = () => {
             <Icon icon={Icons.close} size="md" />
           </button>
         </div>
-        <nav className="flex flex-col gap-3">
-          {items.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
+    <nav className="flex flex-col gap-3">
+      {items.map((item) => (
+        <NavLink
+          key={item.to}
+          to={item.to}
               onClick={() => setIsOpen(false)}
-              className={({ isActive }) =>
+          className={({ isActive }) =>
                 `px-5 py-3 rounded-xl font-bold transition-all flex items-center gap-3 ${
                   isActive 
                     ? 'bg-white text-purple-600 shadow-xl scale-105 neon-border' 
@@ -65,15 +65,15 @@ const Sidebar = () => {
               {({ isActive }) => (
                 <>
                   <Icon icon={item.icon} size="md" className={isActive ? 'text-purple-600' : 'text-white'} />
-                  {item.label}
+          {item.label}
                 </>
               )}
-            </NavLink>
-          ))}
-        </nav>
-      </aside>
+        </NavLink>
+      ))}
+    </nav>
+  </aside>
     </>
-  );
+);
 };
 
 export default Sidebar;

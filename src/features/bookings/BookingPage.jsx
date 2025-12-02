@@ -31,26 +31,26 @@ const BookingPage = () => {
           const partner = resolvePartner(booking);
           return (
             <div key={booking._id} className="bg-white border border-slate-100 rounded-xl p-4 space-y-4">
-              <div>
+            <div>
                 <p className="text-sm text-slate-500 capitalize">
                   {booking.meetingType} • {partner?.name || 'Partner'}
-                </p>
+              </p>
                 <p className="text-lg font-semibold">{new Date(booking.confirmedSchedule).toLocaleString()}</p>
-              </div>
-              <Button
-                variant={booking.isCompleted ? 'secondary' : 'primary'}
+            </div>
+            <Button
+              variant={booking.isCompleted ? 'secondary' : 'primary'}
                 disabled={booking.isCompleted}
-                onClick={() => dispatch(completeBookingAsync(booking._id))}
-              >
-                {booking.isCompleted ? 'Completed' : 'Mark complete'}
-              </Button>
+              onClick={() => dispatch(completeBookingAsync(booking._id))}
+            >
+              {booking.isCompleted ? 'Completed' : 'Mark complete'}
+            </Button>
               {booking.isCompleted && partner && (
                 <div className="border-t border-slate-100 pt-3">
                   <p className="text-sm font-semibold mb-2">Leave a review for {partner.name}</p>
                   <ReviewPrompt booking={booking} partner={partner} />
                 </div>
               )}
-            </div>
+          </div>
           );
         })}
       </div>

@@ -13,7 +13,7 @@ const SkillTag = ({ label }) => {
     <span className={`px-3 py-1.5 bg-gradient-to-r ${colorClass} rounded-full text-xs font-bold border-2 hover:scale-110 transition-transform cursor-default shadow-sm`}>
       {label}
     </span>
-  );
+);
 };
 
 export default SkillTag;
