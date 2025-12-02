@@ -29,6 +29,8 @@ const Modal = ({ title, children, isOpen, onClose, footer }) => {
   if (!isOpen) return null;
 
   console.log('Modal: Rendering with Portal to document.body');
+  console.log('Modal: title =', title);
+  console.log('Modal: children =', children);
 
   // Render modal at document root using Portal
   return createPortal(
@@ -45,32 +47,32 @@ const Modal = ({ title, children, isOpen, onClose, footer }) => {
       }}
     >
       <div 
-        className="glass rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto border-2 border-white/40 animate-slide-up"
+        className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto border-2 border-purple-300"
         onClick={(e) => e.stopPropagation()}
+        style={{ backgroundColor: 'white' }}
       >
         {/* Header */}
-        <div className="sticky top-0 bg-white/95 backdrop-blur-sm border-b-2 border-purple-200 px-4 sm:px-6 py-4 flex items-center justify-between z-10">
-          <h3 className="text-lg sm:text-xl font-bold gradient-text flex items-center gap-2">
-            <Icon icon={Icons.sparklesSolid} size="md" className="text-purple-500" />
-            {title}
+        <div className="sticky top-0 bg-purple-100 border-b-2 border-purple-200 px-4 sm:px-6 py-4 flex items-center justify-between">
+          <h3 className="text-lg sm:text-xl font-bold text-purple-900">
+            {title || 'Modal'}
           </h3>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-purple-100 rounded-full transition-all hover:scale-110 active:scale-95"
+            className="p-2 hover:bg-purple-200 rounded-full transition-all text-2xl font-bold"
             aria-label="Close modal"
           >
-            <Icon icon={Icons.xMark} size="lg" className="text-slate-600" />
+            ×
           </button>
         </div>
 
         {/* Content */}
-        <div className="px-4 sm:px-6 py-4 sm:py-6">
-          {children}
+        <div className="px-4 sm:px-6 py-4 sm:py-6 bg-white">
+          {children || <p>No content</p>}
         </div>
 
         {/* Footer */}
         {footer && (
-          <div className="sticky bottom-0 bg-white/95 backdrop-blur-sm border-t-2 border-purple-200 px-4 sm:px-6 py-4 flex justify-end gap-2">
+          <div className="sticky bottom-0 bg-purple-100 border-t-2 border-purple-200 px-4 sm:px-6 py-4 flex justify-end gap-2">
             {footer}
           </div>
         )}
