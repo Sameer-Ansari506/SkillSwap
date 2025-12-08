@@ -79,43 +79,43 @@ frontend/
 
 ## Features
 
-### 🎨 Modern, Vibrant UI
+###  Modern, Vibrant UI
 - Gradient backgrounds and animated elements
 - Glassmorphism effects
 - Smooth transitions and hover effects
 - Responsive design for all screen sizes
 
-### 🔐 Authentication
+###  Authentication
 - Email/password registration and login
 - JWT-based authentication
 - Protected routes
 - Persistent login with localStorage
 
-### 👥 User Discovery
+###  User Discovery
 - Browse users by skills
 - Filter by skills to teach/learn
 - View user profiles and ratings
 
-### 🤝 Skill Exchange
+###  Skill Exchange
 - Send swap requests to other users
 - Accept/decline incoming requests
 - View request status in dashboard
 
-### 📅 Booking Management
+###  Booking Management
 - Schedule skill exchange sessions
 - View upcoming and past bookings
 - Booking confirmation flow
 
-### 💬 Real-time Chat
+###  Real-time Chat
 - Chat with connected users
 - Real-time message delivery via Socket.io
 - Message history
 
-### ⭐ Reviews & Ratings
+###  Reviews & Ratings
 - Rate and review completed sessions
 - View user ratings and feedback
 
-### ✨ Skills Management
+###  Skills Management
 - Add skills to teach and learn during signup
 - Edit skills in profile
 - Skill levels (Beginner, Intermediate, Advanced, Expert)
